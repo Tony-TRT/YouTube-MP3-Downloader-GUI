@@ -3,7 +3,7 @@ This module provides utility functions for managing the appearance of the user i
 """
 
 from PySide6.QtWidgets import QWidget
-from PySide6.QtGui import QIcon
+from PySide6.QtGui import QPixmap
 
 from packages.constants import constants
 
@@ -13,7 +13,7 @@ class AestheticWindow(QWidget):
     def __init__(self):
 
         super().__init__()
-        self.icons: dict = {icon_name: QIcon(icon_path) for icon_name, icon_path in constants.ICONS.items()}
+        self.icons: dict = {icon_name: QPixmap(icon_path) for icon_name, icon_path in constants.ICONS.items()}
 
         if constants.STYLE.exists():
             self.ui_apply_style()
