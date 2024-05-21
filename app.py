@@ -2,7 +2,7 @@
 Main application file.
 """
 
-from PySide6 import QtWidgets, QtCore
+from PySide6 import QtWidgets
 
 from packages.ui.aesthetic import AestheticWindow
 
@@ -13,7 +13,7 @@ class MainWindow(AestheticWindow):
 
         super().__init__()
         self.setWindowTitle("YouTube MP3 Downloader")
-        self.setFixedSize(900, 500)
+        self.setFixedSize(900, 515)
 
         ##################################################
         # Layouts.
@@ -91,9 +91,7 @@ class MainWindow(AestheticWindow):
         self.le_year.setPlaceholderText("Year")
         self.btn_download = QtWidgets.QPushButton("Download")
         self.lbl_drop_info = QtWidgets.QLabel("Drop the album cover below.")
-        self.lbl_drop_info.setAlignment(QtCore.Qt.AlignCenter)  # type: ignore
         self.lbl_album_cover = QtWidgets.QLabel()
-        self.lbl_album_cover.setAlignment(QtCore.Qt.AlignCenter)  # type: ignore
 
         self.left_layout.addWidget(self.le_youtube_link)
         self.left_layout.addWidget(self.btn_download)
