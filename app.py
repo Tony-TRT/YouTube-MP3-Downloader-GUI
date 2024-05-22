@@ -13,7 +13,7 @@ class MainWindow(AestheticWindow):
 
         super().__init__()
         self.setWindowTitle("YouTube MP3 Downloader")
-        self.setFixedSize(900, 515)
+        self.setFixedSize(900, 500)
 
         ##################################################
         # Layouts.
