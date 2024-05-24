@@ -5,6 +5,7 @@ Main application file.
 from PySide6 import QtWidgets
 
 from packages.ui.aesthetic import AestheticWindow
+from packages.logic import toolkit
 
 
 class MainWindow(AestheticWindow):
@@ -49,6 +50,12 @@ class MainWindow(AestheticWindow):
         ##################################################
 
         self.ui_manage_icons()
+
+        ##################################################
+        # Connections.
+        ##################################################
+
+        self.logic_connect_widgets()
 
     def ui_manage_icons(self) -> None:
         """Icons are managed here."""
@@ -105,6 +112,20 @@ class MainWindow(AestheticWindow):
         self.right_layout.addWidget(self.le_total_tracks, 2, 1)
         self.right_layout.addWidget(self.le_track_title, 3, 0)
         self.right_layout.addWidget(self.le_year, 3, 1)
+
+    def logic_connect_widgets(self) -> None:
+        """Connections are managed here."""
+
+        self.btn_download.clicked.connect(self.logic_main_process)
+
+    def logic_main_process(self) -> None:
+        """Processes the information entered by the user and attempts to create the desired mp3 file."""
+
+        is_youtube_link: bool = toolkit.check_link(text=self.le_youtube_link.text())
+
+        if not is_youtube_link:
+            # Display error
+            return
 
 
 if __name__ == '__main__':
