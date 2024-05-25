@@ -121,11 +121,28 @@ class MainWindow(AestheticWindow):
     def logic_main_process(self) -> None:
         """Processes the information entered by the user and attempts to create the desired mp3 file."""
 
-        is_youtube_link: bool = toolkit.check_link(text=self.le_youtube_link.text())
+        youtube_link: str = self.le_youtube_link.text()
 
-        if not is_youtube_link:
+        if not toolkit.check_link(text=youtube_link):
             # Display error
             return
+
+        strings: list[str] = [
+            QLineEdit.text() for QLineEdit in {
+                self.le_disc_number,
+                self.le_total_discs,
+                self.le_track_number,
+                self.le_total_tracks,
+                self.le_year
+            }
+        ]
+
+        if not toolkit.check_data(strings=strings):
+            # Display error
+            return
+
+        # Download file
+        # Tag file
 
 
 if __name__ == '__main__':
