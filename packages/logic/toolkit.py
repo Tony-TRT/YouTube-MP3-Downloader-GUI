@@ -21,13 +21,13 @@ def check_link(text: str) -> bool:
 
 
 def check_data(strings: list[str]) -> bool:
-    """Check if all strings in a list are composed only of digits.
+    """Check if all strings in a list are composed only of digits or are empty.
 
     Args:
         strings (list[str]): A list of strings to check.
 
     Returns:
-        bool: True if all strings in the list contain only digits; False otherwise.
+        bool: True if all strings in the list contain only digits or are empty; False otherwise.
     """
 
-    return all(string.isdigit() for string in strings)
+    return all(string.isdigit() or not string for string in strings)

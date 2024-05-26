@@ -118,13 +118,23 @@ class MainWindow(AestheticWindow):
 
         self.btn_download.clicked.connect(self.logic_main_process)
 
+    def logic_error_dialog(self, message: str) -> None:
+        """Display a critical error dialog with the given message.
+
+        Args:
+            message (str): The error message to display in the dialog.
+        """
+
+        QtWidgets.QMessageBox.critical(self, "Error", message)
+
     def logic_main_process(self) -> None:
         """Processes the information entered by the user and attempts to create the desired mp3 file."""
 
         youtube_link: str = self.le_youtube_link.text()
 
         if not toolkit.check_link(text=youtube_link):
-            # Display error
+            error_message: str = "The provided link is not a valid YouTube link."
+            self.logic_error_dialog(message=error_message)
             return
 
         strings: list[str] = [
@@ -138,7 +148,8 @@ class MainWindow(AestheticWindow):
         ]
 
         if not toolkit.check_data(strings=strings):
-            # Display error
+            error_message: str = "At least one of the provided tags is not a numeric value, although it should be."
+            self.logic_error_dialog(message=error_message)
             return
 
         # Download file
