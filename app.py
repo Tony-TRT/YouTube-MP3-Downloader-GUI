@@ -2,10 +2,12 @@
 Main application file.
 """
 
+from functools import partial
+
 from PySide6 import QtWidgets
 
 from packages.ui.aesthetic import AestheticWindow
-from packages.logic import toolkit
+from packages.logic import toolkit, bg_processes
 
 
 class MainWindow(AestheticWindow):
@@ -15,6 +17,7 @@ class MainWindow(AestheticWindow):
         super().__init__()
         self.setWindowTitle("YouTube MP3 Downloader")
         self.setFixedSize(900, 500)
+        self.thread = bg_processes.DownloadAndProcess()
 
         ##################################################
         # Layouts.
@@ -117,6 +120,19 @@ class MainWindow(AestheticWindow):
         """Connections are managed here."""
 
         self.btn_download.clicked.connect(self.logic_main_process)
+        self.thread.download_finished.connect(partial(self.logic_display_progress, 1))
+        self.thread.file_converted.connect(partial(self.logic_display_progress, 2))
+        self.thread.error_happened.connect(partial(self.logic_display_progress, -1))
+
+    def logic_display_progress(self, step: int) -> None:
+        """Update the window title to display overall progress.
+
+        Args:
+            step (int): The current step of the overall process.
+        """
+
+        title: str = "YouTube MP3 Downloader - Error" if step < 0 else f"YouTube MP3 Downloader - {step}/3"
+        self.setWindowTitle(title)
 
     def logic_error_dialog(self, message: str) -> None:
         """Display a critical error dialog with the given message.
@@ -152,8 +168,9 @@ class MainWindow(AestheticWindow):
             self.logic_error_dialog(message=error_message)
             return
 
-        # Download file
-        # Tag file
+        self.logic_display_progress(0)
+        self.thread.set_url(youtube_link)
+        self.thread.start()
 
 
 if __name__ == '__main__':
