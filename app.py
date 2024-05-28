@@ -19,6 +19,15 @@ class MainWindow(AestheticWindow):
         self.setFixedSize(900, 500)
         self.setAcceptDrops(True)
         self.current_cover = None
+        self.metadata: dict = {
+            "album": None,
+            "artist": None,
+            "discnumber": None,
+            "tracknumber": None,
+            "title": None,
+            "date": None,
+            "cover": None
+        }
         self.thread = bg_processes.DownloadAndProcess()
 
         ##################################################
@@ -139,6 +148,7 @@ class MainWindow(AestheticWindow):
         self.btn_download.clicked.connect(self.logic_main_process)
         self.thread.download_finished.connect(partial(self.logic_display_progress, 1))
         self.thread.file_converted.connect(partial(self.logic_display_progress, 2))
+        self.thread.file_tagged.connect(partial(self.logic_display_progress, 3))
         self.thread.error_happened.connect(partial(self.logic_display_progress, -1))
 
     def logic_display_progress(self, step: int) -> None:
@@ -185,8 +195,17 @@ class MainWindow(AestheticWindow):
             self.logic_error_dialog(message=error_message)
             return
 
+        self.metadata["album"] = self.le_album.text()
+        self.metadata["artist"] = self.le_artist.text()
+        self.metadata["discnumber"] = f"{self.le_disc_number.text()}/{self.le_total_discs.text()}"
+        self.metadata["tracknumber"] = f"{self.le_track_number.text()}/{self.le_total_tracks.text()}"
+        self.metadata["title"] = self.le_track_title.text()
+        self.metadata["date"] = self.le_year.text()
+        self.metadata["cover"] = self.current_cover[1] if self.current_cover else None
+
         self.logic_display_progress(0)
-        self.thread.set_url(youtube_link)
+        self.thread.set_url(link=youtube_link)
+        self.thread.set_metadata(metadata=self.metadata)
         self.thread.start()
 
 
