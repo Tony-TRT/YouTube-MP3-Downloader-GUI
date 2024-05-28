@@ -13,10 +13,12 @@ from packages.logic import toolkit, bg_processes
 class MainWindow(AestheticWindow):
 
     def __init__(self):
-
         super().__init__()
+
         self.setWindowTitle("YouTube MP3 Downloader")
         self.setFixedSize(900, 500)
+        self.setAcceptDrops(True)
+        self.current_cover = None
         self.thread = bg_processes.DownloadAndProcess()
 
         ##################################################
@@ -59,6 +61,21 @@ class MainWindow(AestheticWindow):
         ##################################################
 
         self.logic_connect_widgets()
+
+    def dragEnterEvent(self, event):
+
+        event.accept()
+
+    def dropEvent(self, event):
+        """Handle file drop events, process image files, and update the album cover label."""
+
+        event.accept()
+        dropped_file = event.mimeData().urls()[0].toLocalFile()
+
+        if dropped_file.split('.')[-1].casefold() in ['jpg', 'jpeg', 'png', 'bmp']:
+
+            self.current_cover = toolkit.process_album_cover(image=dropped_file)
+            self.lbl_album_cover.setPixmap(self.current_cover[0])
 
     def ui_manage_icons(self) -> None:
         """Icons are managed here."""
@@ -131,14 +148,7 @@ class MainWindow(AestheticWindow):
             step (int): The current step of the overall process.
         """
 
-        step_map: dict = {
-            -1: " - Error",
-            0: " - 0/3",
-            1: " - 1/3",
-            2: " - 2/3",
-            3: " - 3/3, Process completed!"
-        }
-
+        step_map: dict = {-1: " - Error", 0: " - 0/3", 1: " - 1/3", 2: " - 2/3", 3: " - 3/3, Process completed!"}
         self.setWindowTitle("YouTube MP3 Downloader" + step_map.get(step, ""))
 
     def logic_error_dialog(self, message: str) -> None:

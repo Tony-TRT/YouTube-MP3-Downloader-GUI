@@ -2,6 +2,10 @@
 This module contains useful tools for the application.
 """
 
+from PIL import Image
+from io import BytesIO
+from PySide6.QtGui import QPixmap
+
 
 def check_link(text: str) -> bool:
     """Check if a given text string contains a valid YouTube link.
@@ -31,3 +35,36 @@ def check_data(strings: list[str]) -> bool:
     """
 
     return all(string.isdigit() or not string for string in strings)
+
+
+def process_album_cover(image: str) -> tuple[QPixmap, bytes]:
+    """Process an album cover image by removing metadata, resizing,
+    and converting it to both QPixmap and binary data formats.
+
+    Args:
+        image (str): The file path to the album cover image.
+
+    Returns:
+        tuple[QPixmap, bytes]: A tuple containing:
+            - QPixmap: The image as a QPixmap, suitable for display in a PySide6 application.
+            - bytes: The image data in PNG format, suitable for tagging an MP3 file.
+    """
+
+    image: Image = Image.open(image)
+
+    # Remove metadata by creating a new image with the same data
+    data: list = list(image.getdata())
+    new_image: Image = Image.new(image.mode, image.size)
+    new_image.putdata(data)
+
+    # Resize the image to 200x200 pixels
+    new_image: Image = new_image.resize((200, 200))
+
+    # Save the processed image to a byte array in PNG format
+    byte_array: BytesIO = BytesIO()
+    new_image.save(byte_array, format='PNG')
+    byte_data: bytes = byte_array.getvalue()
+
+    pixmap = QPixmap()
+    pixmap.loadFromData(byte_data)
+    return pixmap, byte_data
