@@ -131,8 +131,15 @@ class MainWindow(AestheticWindow):
             step (int): The current step of the overall process.
         """
 
-        title: str = "YouTube MP3 Downloader - Error" if step < 0 else f"YouTube MP3 Downloader - {step}/3"
-        self.setWindowTitle(title)
+        step_map: dict = {
+            -1: " - Error",
+            0: " - 0/3",
+            1: " - 1/3",
+            2: " - 2/3",
+            3: " - 3/3, Process completed!"
+        }
+
+        self.setWindowTitle("YouTube MP3 Downloader" + step_map.get(step, ""))
 
     def logic_error_dialog(self, message: str) -> None:
         """Display a critical error dialog with the given message.
