@@ -158,7 +158,14 @@ class MainWindow(AestheticWindow):
             step (int): The current step of the overall process.
         """
 
-        step_map: dict = {-1: " - Error", 0: " - 0/3", 1: " - 1/3", 2: " - 2/3", 3: " - 3/3, Process completed!"}
+        step_map: dict = {
+            -1: " - An error has occurred.",
+            0: " - Downloading...",
+            1: " - Converting...",
+            2: " - Writing metadata...",
+            3: " - Success!"
+        }
+
         self.setWindowTitle("YouTube MP3 Downloader" + step_map.get(step, ""))
 
     def logic_error_dialog(self, message: str) -> None:
