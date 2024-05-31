@@ -37,4 +37,8 @@ QLabel
 
 QLineEdit
 {
+    color: #646464;
+    background-color: #F3F3F3;
+    selection-background-color: #2B5370;
+    border: 5px solid #FFA500;
 }

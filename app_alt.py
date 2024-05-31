@@ -56,6 +56,7 @@ class MainWindow(AestheticWindow):
 
         self.setWindowIcon(self.images.get("logo"))
         self.label_background.setPixmap(self.images.get("background"))
+        self.le_youtube_url.addAction(self.images.get('YouTube'), self.le_youtube_url.ActionPosition.LeadingPosition)
 
     def ui_manage_layouts(self) -> None:
         """Layouts are managed here."""
@@ -67,8 +68,13 @@ class MainWindow(AestheticWindow):
         """Widgets are managed here."""
 
         self.label_background = QtWidgets.QLabel(self)
+        self.le_youtube_url = QtWidgets.QLineEdit(self.label_background)
+        self.le_youtube_url.setPlaceholderText("Paste YouTube link here.")
+        self.le_youtube_url.setFixedSize(405, 40)
 
         self.main_layout.addWidget(self.label_background)
+
+        self.le_youtube_url.move(20, 55)
 
 
 if __name__ == '__main__':
