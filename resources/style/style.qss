@@ -4,8 +4,7 @@
 
 QWidget
 {
-    color: #FFA500;
-    background-color: #242424;
+    background-color: #F3F3F3;
 }
 
 /*------------------------------*/
@@ -14,26 +13,14 @@ QWidget
 
 QPushButton
 {
-    color: #FFA500;
-    background-color: #2B5370;
-    border: 2px solid #FFA500;
-    border-bottom-left-radius: 15px;
-    border-top-left-radius: 5px;
-    border-bottom-right-radius: 5px;
-    border-top-right-radius: 15px;
-    padding: 8px;
-    margin-top: 10px;
-    margin-bottom: 10px;
 }
 
 QPushButton::hover
 {
-    background-color: #496F8E;
 }
 
 QPushButton::pressed
 {
-    background-color: #2B5370;
 }
 
 /*------------------------------*/
@@ -42,12 +29,6 @@ QPushButton::pressed
 
 QLabel
 {
-    color: #FFFFFF;
-    background-color: #313131;
-    border: 1px solid #2B5370;
-    border-radius: 5px;
-    padding: 10px;
-    qproperty-alignment: AlignCenter;
 }
 
 /*------------------------------*/
@@ -56,9 +37,4 @@ QLabel
 
 QLineEdit
 {
-    color: #FFFFFF;
-    background-color: #3F3F3F;
-    selection-background-color: #2B5370;
-    border: 1px solid #FFA500;
-    height: 25px;
 }
