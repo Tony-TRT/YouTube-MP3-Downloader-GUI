@@ -42,6 +42,7 @@ class MainWindow(AestheticWindow):
         self.le_track_title = None
         self.le_year = None
         self.btn_download = None
+        self.btn_settings = None
 
         self.ui_manage_widgets()
 
@@ -56,7 +57,9 @@ class MainWindow(AestheticWindow):
 
         self.setWindowIcon(self.images.get("logo"))
         self.label_background.setPixmap(self.images.get("background"))
-        self.le_youtube_url.addAction(self.images.get('YouTube'), self.le_youtube_url.ActionPosition.LeadingPosition)
+        self.le_youtube_url.addAction(self.images.get("YouTube"), self.le_youtube_url.ActionPosition.LeadingPosition)
+        self.btn_download.setIcon(self.images.get("download"))
+        self.btn_settings.setIcon(self.images.get("settings"))
 
     def ui_manage_layouts(self) -> None:
         """Layouts are managed here."""
@@ -71,10 +74,16 @@ class MainWindow(AestheticWindow):
         self.le_youtube_url = QtWidgets.QLineEdit(self.label_background)
         self.le_youtube_url.setPlaceholderText("Paste YouTube link here.")
         self.le_youtube_url.setFixedSize(405, 40)
+        self.btn_download = QtWidgets.QPushButton(parent=self.label_background, text="Download")
+        self.btn_download.setFixedSize(215, 95)
+        self.btn_settings = QtWidgets.QPushButton(parent=self.label_background, text="Settings")
+        self.btn_settings.setFixedSize(215, 95)
 
         self.main_layout.addWidget(self.label_background)
 
         self.le_youtube_url.move(20, 55)
+        self.btn_download.move(455, 65)
+        self.btn_settings.move(680, 65)
 
 
 if __name__ == '__main__':

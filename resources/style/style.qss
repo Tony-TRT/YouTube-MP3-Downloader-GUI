@@ -13,14 +13,19 @@ QWidget
 
 QPushButton
 {
+    color: #000000;
+    background-color: #87A9B5;
+    border: 5px solid #45575F;
 }
 
 QPushButton::hover
 {
+    background-color: #A3CBD9;
 }
 
 QPushButton::pressed
 {
+    background-color: #87A9B5;
 }
 
 /*------------------------------*/
@@ -37,7 +42,7 @@ QLabel
 
 QLineEdit
 {
-    color: #646464;
+    color: #000000;
     background-color: #F3F3F3;
     selection-background-color: #2B5370;
     border: 5px solid #FFA500;
