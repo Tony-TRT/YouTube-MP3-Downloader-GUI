@@ -60,10 +60,10 @@ class MainWindow(AestheticWindow):
         self.ui_manage_widgets()
 
         ##################################################
-        # Icons.
+        # Graphics.
         ##################################################
 
-        self.ui_manage_icons()
+        self.ui_manage_graphics()
 
         ##################################################
         # Connections.
@@ -86,11 +86,11 @@ class MainWindow(AestheticWindow):
             self.current_cover = toolkit.process_album_cover(image=dropped_file)
             self.lbl_album_cover.setPixmap(self.current_cover[0])
 
-    def ui_manage_icons(self) -> None:
-        """Icons are managed here."""
+    def ui_manage_graphics(self) -> None:
+        """Graphics are managed here."""
 
-        self.setWindowIcon(self.icons.get("logo"))
-        self.lbl_album_cover.setPixmap(self.icons.get("drop_cover"))
+        self.setWindowIcon(self.images.get("logo"))
+        self.lbl_album_cover.setPixmap(self.images.get("drop_cover"))
 
     def ui_manage_layouts(self) -> None:
         """Layouts are managed here."""

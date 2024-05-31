@@ -13,7 +13,7 @@ class AestheticWindow(QWidget):
     def __init__(self):
 
         super().__init__()
-        self.icons: dict = {icon_name: QPixmap(icon_path) for icon_name, icon_path in constants.ICONS.items()}
+        self.images: dict = {image_name: QPixmap(image_path) for image_name, image_path in constants.IMAGES.items()}
 
         if constants.STYLE.exists():
             self.ui_apply_style()
