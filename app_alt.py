@@ -7,7 +7,7 @@ import sys
 from PySide6 import QtWidgets
 
 from packages.ui.aesthetic import AestheticWindow
-from packages.ui.custom_widgets import CustomQLineEdit
+from packages.ui.custom_widgets import CustomQLineEdit, CustomQLabel
 
 
 class MainWindow(AestheticWindow):
@@ -50,6 +50,7 @@ class MainWindow(AestheticWindow):
 
         self.setWindowIcon(self.images["logo"])
         self.label_background.setPixmap(self.images["background"])
+        self.label_album_cover.setPixmap(self.images["drop_cover"])
         self.le_youtube_url.addAction(self.images["YouTube"], self.le_youtube_url.ActionPosition.LeadingPosition)
 
         for key, value in CustomQLineEdit.instances.items():
@@ -68,6 +69,8 @@ class MainWindow(AestheticWindow):
         """Widgets are managed here."""
 
         self.label_background = QtWidgets.QLabel(self)
+        self.label_drop_info = CustomQLabel(self.label_background, (360, 40), "Drop the album cover below.")
+        self.label_album_cover = CustomQLabel(self.label_background, (360, 220))
         self.le_youtube_url = QtWidgets.QLineEdit(self.label_background)
         self.le_youtube_url.setPlaceholderText("Paste YouTube link here.")
         self.le_youtube_url.setFixedSize(405, 40)
@@ -87,6 +90,8 @@ class MainWindow(AestheticWindow):
 
         self.main_layout.addWidget(self.label_background)
 
+        self.label_drop_info.move(20, 170)
+        self.label_album_cover.move(20, 220)
         self.le_youtube_url.move(20, 55)
         y_coordinate: int = 170
 
