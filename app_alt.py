@@ -6,6 +6,7 @@ import sys
 
 from PySide6 import QtWidgets
 
+from packages.logic import toolkit
 from packages.ui.aesthetic import AestheticWindow
 from packages.ui.custom_widgets import CustomQLineEdit, CustomQLabel, CustomQProgressBar
 
@@ -45,6 +46,12 @@ class MainWindow(AestheticWindow):
         ##################################################
 
         self.ui_manage_graphics()
+
+        ##################################################
+        # Connections.
+        ##################################################
+
+        self.logic_connect_widgets()
 
     def ui_manage_graphics(self) -> None:
         """Graphics are managed here."""
@@ -104,6 +111,38 @@ class MainWindow(AestheticWindow):
 
         self.btn_download.move(455, 65)
         self.btn_settings.move(680, 65)
+
+    def logic_connect_widgets(self) -> None:
+        """Connections are managed here."""
+
+        self.btn_download.clicked.connect(self.logic_main_process)
+
+    def logic_display_information(self, signal: int) -> None:
+        """Displays relevant information in the window title based on the given signal.
+
+        Args:
+            signal (int): A signal associated with a specific message to be displayed.
+        """
+
+        signal_map: dict = {
+            -2: " - The provided link is not a valid YouTube link.",
+            -1: " - An error has occurred.",
+            0: " - Downloading...",
+            1: " - Converting...",
+            2: " - Writing metadata...",
+            3: " - Success!"
+        }
+
+        self.setWindowTitle("YouTube MP3 Downloader" + signal_map.get(signal, ""))
+
+    def logic_main_process(self) -> None:
+        """Processes the information entered by the user and attempts to create the desired mp3 file."""
+
+        youtube_link: str = self.le_youtube_url.text()
+
+        if not toolkit.check_link(text=youtube_link):
+            self.logic_display_information(signal=-2)
+            return
 
 
 if __name__ == '__main__':
