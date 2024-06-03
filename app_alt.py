@@ -7,7 +7,7 @@ import sys
 from PySide6 import QtWidgets
 
 from packages.ui.aesthetic import AestheticWindow
-from packages.ui.custom_widgets import CustomQLineEdit, CustomQLabel
+from packages.ui.custom_widgets import CustomQLineEdit, CustomQLabel, CustomQProgressBar
 
 
 class MainWindow(AestheticWindow):
@@ -33,6 +33,7 @@ class MainWindow(AestheticWindow):
         self.label_background = None
         self.label_drop_info = None
         self.label_album_cover = None
+        self.progress_bar = None
         self.le_youtube_url = None
         self.btn_download = None
         self.btn_settings = None
@@ -71,6 +72,7 @@ class MainWindow(AestheticWindow):
         self.label_background = QtWidgets.QLabel(self)
         self.label_drop_info = CustomQLabel(self.label_background, (360, 40), "Drop the album cover below.")
         self.label_album_cover = CustomQLabel(self.label_background, (360, 220))
+        self.progress_bar = CustomQProgressBar(parent=self.label_background)
         self.le_youtube_url = QtWidgets.QLineEdit(self.label_background)
         self.le_youtube_url.setPlaceholderText("Paste YouTube link here.")
         self.le_youtube_url.setFixedSize(405, 40)
