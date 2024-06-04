@@ -18,6 +18,7 @@ class MainWindow(AestheticWindow):
 
         self.setWindowTitle("YouTube MP3 Downloader")
         self.setFixedSize(900, 500)
+        self.setAcceptDrops(True)
         self.thread = bg_processes.DownloadAndProcess()
         self.current_cover = None
         self.placeholders: list[str] = [
@@ -66,6 +67,21 @@ class MainWindow(AestheticWindow):
         ##################################################
 
         self.logic_connect_widgets()
+
+    def dragEnterEvent(self, event):
+
+        event.accept()
+
+    def dropEvent(self, event):
+        """Handle file drop events, process image files, and update the album cover label."""
+
+        event.accept()
+        dropped_file = event.mimeData().urls()[0].toLocalFile()
+
+        if dropped_file.split('.')[-1].casefold() in ['jpg', 'jpeg', 'png', 'bmp']:
+
+            self.current_cover = toolkit.process_album_cover(image=dropped_file)
+            self.label_album_cover.setPixmap(self.current_cover[0])
 
     def ui_manage_graphics(self) -> None:
         """Graphics are managed here."""
