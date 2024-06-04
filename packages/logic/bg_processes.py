@@ -72,12 +72,15 @@ class DownloadAndProcess(QThread):
 
         metadata = id3.ID3(file)
         cover: bytes | None = self._metadata.popitem()[1]
-        metadata.add(id3.TALB(encoding=3, text=self._metadata.get("album")))
+
+        metadata.add(id3.TIT2(encoding=3, text=self._metadata.get("title")))
         metadata.add(id3.TPE1(encoding=3, text=self._metadata.get("artist")))
+        metadata.add(id3.TALB(encoding=3, text=self._metadata.get("album")))
+        metadata.add(id3.TDRC(encoding=3, text=self._metadata.get("year")))
+        metadata.add(id3.TCON(encoding=3, text=self._metadata.get("genre")))
+        metadata.add(id3.TCOP(encoding=3, text=self._metadata.get("copyright")))
         metadata.add(id3.TPOS(encoding=3, text=self._metadata.get("disc_number")))
         metadata.add(id3.TRCK(encoding=3, text=self._metadata.get("track_number")))
-        metadata.add(id3.TIT2(encoding=3, text=self._metadata.get("title")))
-        metadata.add(id3.TDRC(encoding=3, text=self._metadata.get("year")))
 
         if cover:
             apic = id3.APIC(encoding=3, mime="image/png", type=3, desc=u"Cover", data=cover)
