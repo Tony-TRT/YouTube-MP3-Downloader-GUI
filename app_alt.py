@@ -6,7 +6,7 @@ import sys
 
 from PySide6 import QtWidgets
 
-from packages.logic import toolkit
+from packages.logic import toolkit, bg_processes
 from packages.ui.aesthetic import AestheticWindow
 from packages.ui.custom_widgets import CustomQLineEdit, CustomQLabel, CustomQProgressBar
 
@@ -18,6 +18,20 @@ class MainWindow(AestheticWindow):
 
         self.setWindowTitle("YouTube MP3 Downloader")
         self.setFixedSize(900, 500)
+        self.thread = bg_processes.DownloadAndProcess()
+        self.current_cover = None
+        self.placeholders: list[str] = [
+            "Title",
+            "Artist",
+            "Album",
+            "Year",
+            "Genre",
+            "Copyright",
+            "Disc Number",
+            "Total Discs",
+            "Track Number",
+            "Total Tracks"
+        ]
 
         ##################################################
         # Layouts.
@@ -84,12 +98,7 @@ class MainWindow(AestheticWindow):
         self.le_youtube_url.setPlaceholderText("Paste YouTube link here.")
         self.le_youtube_url.setFixedSize(405, 40)
 
-        placeholders: list[str] = [
-            "Title", "Artist", "Album", "Year", "Genre", "Copyright",
-            "Disc Number", "Total Discs", "Track Number", "Total Tracks"
-        ]
-
-        for placeholder in placeholders:
+        for placeholder in self.placeholders:
             CustomQLineEdit(parent=self.label_background, placeholder_text=placeholder)
 
         self.btn_download = QtWidgets.QPushButton(parent=self.label_background, text="Download")
@@ -125,6 +134,7 @@ class MainWindow(AestheticWindow):
         """
 
         signal_map: dict = {
+            -3: " - One or more tags are non-numeric.",
             -2: " - The provided link is not a valid YouTube link.",
             -1: " - An error has occurred.",
             0: " - Downloading...",
@@ -138,11 +148,28 @@ class MainWindow(AestheticWindow):
     def logic_main_process(self) -> None:
         """Processes the information entered by the user and attempts to create the desired mp3 file."""
 
+        line_edits: dict = CustomQLineEdit.instances
         youtube_link: str = self.le_youtube_url.text()
 
         if not toolkit.check_link(text=youtube_link):
             self.logic_display_information(signal=-2)
             return
+
+        requires_num_value: list = [le for key, le in line_edits.items() if key == "Year" or " " in key]
+        strings: list[str] = [le.text() for le in requires_num_value]
+
+        if not toolkit.check_data(strings=strings):
+            self.logic_display_information(signal=-3)
+            return
+
+        tags: dict = {phr.lower().replace(" ", "_"): line_edits[phr].text() for phr in self.placeholders}
+        tags["disc_number"] = f"{line_edits["Disc Number"].text()}/{line_edits["Total Discs"].text()}"
+        tags["track_number"] = f"{line_edits["Track Number"].text()}/{line_edits["Total Tracks"].text()}"
+        tags["cover"] = self.current_cover[1] if self.current_cover else None
+
+        self.thread.set_url(link=youtube_link)
+        self.thread.set_metadata(metadata=tags)
+        self.thread.start()
 
 
 if __name__ == '__main__':
