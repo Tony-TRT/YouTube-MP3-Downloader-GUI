@@ -148,23 +148,25 @@ class MainWindow(AestheticWindow):
         self.thread.error_happened.connect(partial(self.logic_display_information, -1))
 
     def logic_display_information(self, signal: int) -> None:
-        """Displays relevant information in the window title based on the given signal.
+        """Displays information to the user regarding the progress or errors encountered.
+        This information is shown in the window title and / or updated on the progress bar.
 
         Args:
-            signal (int): A signal associated with a specific message to be displayed.
+            signal (int): The signal associated with the information to be communicated.
         """
 
         signal_map: dict = {
-            -3: " - One or more tags are non-numeric.",
-            -2: " - The provided link is not a valid YouTube link.",
-            -1: " - An error has occurred.",
-            0: " - Downloading...",
-            1: " - Converting...",
-            2: " - Writing metadata...",
-            3: " - Success!"
+            -3: (" - One or more tags are non-numeric.", 0),
+            -2: (" - The provided link is not a valid YouTube link.", 0),
+            -1: (" - An error has occurred.", 0),
+            0: (" - Downloading...", 0),
+            1: (" - Converting...", 35),
+            2: (" - Writing metadata...", 70),
+            3: (" - Success!", 100)
         }
 
-        self.setWindowTitle("YouTube MP3 Downloader" + signal_map.get(signal, ""))
+        self.setWindowTitle("YouTube MP3 Downloader" + signal_map[signal][0])
+        self.progress_bar.setValue(signal_map[signal][1])
 
     def logic_main_process(self) -> None:
         """Processes the information entered by the user and attempts to create the desired mp3 file."""
