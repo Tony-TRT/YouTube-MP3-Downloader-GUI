@@ -142,6 +142,7 @@ class MainWindow(AestheticWindow):
         """Connections are managed here."""
 
         self.btn_download.clicked.connect(self.logic_main_process)
+        self.btn_settings.clicked.connect(self.logic_open_settings)
         self.thread.download_finished.connect(partial(self.logic_display_information, 1))
         self.thread.file_converted.connect(partial(self.logic_display_information, 2))
         self.thread.file_tagged.connect(partial(self.logic_display_information, 3))
@@ -194,6 +195,10 @@ class MainWindow(AestheticWindow):
         self.thread.set_url(link=youtube_link)
         self.thread.set_metadata(metadata=tags)
         self.thread.start()
+
+    def logic_open_settings(self) -> None:
+
+        ...
 
 
 if __name__ == '__main__':
