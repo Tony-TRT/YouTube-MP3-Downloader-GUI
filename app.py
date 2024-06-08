@@ -6,6 +6,7 @@ import sys
 from functools import partial
 
 from PySide6 import QtWidgets
+from PySide6.QtWidgets import QMessageBox
 
 from packages.logic import toolkit, bg_processes
 from packages.ui.aesthetic import AestheticWindow
@@ -22,6 +23,7 @@ class MainWindow(AestheticWindow):
         self.setAcceptDrops(True)
         self.thread = bg_processes.DownloadAndProcess()
         self.current_cover = None
+        self.mp3_quality: str = "192k"
         self.placeholders: list[str] = [
             "Title",
             "Artist",
@@ -197,8 +199,24 @@ class MainWindow(AestheticWindow):
         self.thread.start()
 
     def logic_open_settings(self) -> None:
+        """Opens a dialog for selecting the mp3 audio quality."""
 
-        ...
+        # Setting up the QMessageBox
+        win = QMessageBox(self)
+        win.setIcon(QMessageBox.Question)  # type: ignore
+        win.setWindowTitle("Settings")
+        win.setText("Please select the audio quality for the mp3")
+        win.setStyleSheet("QLabel {color: black} QPushButton {width: 120px; height: 40px}")
+
+        # Creating the buttons
+        options: list[str] = ["128", "192", "320"]
+        buttons: dict = {
+            win.addButton(opt + " kbps", QMessageBox.ActionRole): opt + "k" for opt in options  # type: ignore
+        }
+        win.exec()
+
+        # Record the user's choice
+        self.mp3_quality: str = buttons[win.clickedButton()]
 
 
 if __name__ == '__main__':
