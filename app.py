@@ -194,8 +194,9 @@ class MainWindow(AestheticWindow):
         tags["cover"] = self.current_cover[1] if self.current_cover else None
 
         self.logic_display_information(signal=0)
-        self.thread.set_url(link=youtube_link)
-        self.thread.set_metadata(metadata=tags)
+        setattr(self.thread, "youtube_link", youtube_link)
+        setattr(self.thread, "metadata", tags)
+        setattr(self.thread, "quality", self.mp3_quality)
         self.thread.start()
 
     def logic_open_settings(self) -> None:
