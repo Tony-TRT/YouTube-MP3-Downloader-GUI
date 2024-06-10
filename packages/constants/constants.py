@@ -10,7 +10,7 @@ from pathlib import Path
 
 BASE_FOLDER: final(Path) = Path(__file__).resolve().parent.parent.parent
 RESOURCES_FOLDER: final(Path) = Path.joinpath(BASE_FOLDER, "resources")
-ICONS_FOLDER: final(Path) = Path.joinpath(RESOURCES_FOLDER, "icons")
-ICONS: final(dict) = {icon_path.stem: str(icon_path) for icon_path in ICONS_FOLDER.iterdir()}
+IMAGES_FOLDER: final(Path) = Path.joinpath(RESOURCES_FOLDER, "images")
+IMAGES: final(dict) = {image_path.stem: str(image_path) for image_path in IMAGES_FOLDER.iterdir()}
 STYLE_FOLDER: final(Path) = Path.joinpath(RESOURCES_FOLDER, "style")
 STYLE: final(Path) = Path.joinpath(STYLE_FOLDER, "style.qss")

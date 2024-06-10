@@ -2,12 +2,15 @@
 Main application file.
 """
 
+import sys
 from functools import partial
 
 from PySide6 import QtWidgets
+from PySide6.QtWidgets import QMessageBox
 
-from packages.ui.aesthetic import AestheticWindow
 from packages.logic import toolkit, bg_processes
+from packages.ui.aesthetic import AestheticWindow
+from packages.ui.custom_widgets import CustomQLineEdit, CustomQLabel, CustomQProgressBar
 
 
 class MainWindow(AestheticWindow):
@@ -18,25 +21,27 @@ class MainWindow(AestheticWindow):
         self.setWindowTitle("YouTube MP3 Downloader")
         self.setFixedSize(900, 500)
         self.setAcceptDrops(True)
-        self.current_cover = None
-        self.metadata: dict = {
-            "album": None,
-            "artist": None,
-            "discnumber": None,
-            "tracknumber": None,
-            "title": None,
-            "date": None,
-            "cover": None
-        }
         self.thread = bg_processes.DownloadAndProcess()
+        self.current_cover = None
+        self.mp3_quality: str = "192k"
+        self.placeholders: list[str] = [
+            "Title",
+            "Artist",
+            "Album",
+            "Year",
+            "Genre",
+            "Copyright",
+            "Disc Number",
+            "Total Discs",
+            "Track Number",
+            "Total Tracks"
+        ]
 
         ##################################################
         # Layouts.
         ##################################################
 
         self.main_layout = None
-        self.left_layout = None
-        self.right_layout = None
 
         self.ui_manage_layouts()
 
@@ -44,26 +49,21 @@ class MainWindow(AestheticWindow):
         # Widgets.
         ##################################################
 
-        self.le_youtube_link = None
-        self.le_album = None
-        self.le_artist = None
-        self.le_disc_number = None
-        self.le_total_discs = None
-        self.le_track_number = None
-        self.le_total_tracks = None
-        self.le_track_title = None
-        self.le_year = None
+        self.label_background = None
+        self.label_drop_info = None
+        self.label_album_cover = None
+        self.progress_bar = None
+        self.le_youtube_url = None
         self.btn_download = None
-        self.lbl_drop_info = None
-        self.lbl_album_cover = None
+        self.btn_settings = None
 
         self.ui_manage_widgets()
 
         ##################################################
-        # Icons.
+        # Graphics.
         ##################################################
 
-        self.ui_manage_icons()
+        self.ui_manage_graphics()
 
         ##################################################
         # Connections.
@@ -84,140 +84,144 @@ class MainWindow(AestheticWindow):
         if dropped_file.split('.')[-1].casefold() in ['jpg', 'jpeg', 'png', 'bmp']:
 
             self.current_cover = toolkit.process_album_cover(image=dropped_file)
-            self.lbl_album_cover.setPixmap(self.current_cover[0])
+            self.label_album_cover.setPixmap(self.current_cover[0])
 
-    def ui_manage_icons(self) -> None:
-        """Icons are managed here."""
+    def ui_manage_graphics(self) -> None:
+        """Graphics are managed here."""
 
-        self.setWindowIcon(self.icons.get("logo"))
-        self.lbl_album_cover.setPixmap(self.icons.get("drop_cover"))
+        self.setWindowIcon(self.images["logo"])
+        self.label_background.setPixmap(self.images["background"])
+        self.label_album_cover.setPixmap(self.images["drop_cover"])
+        self.le_youtube_url.addAction(self.images["YouTube"], self.le_youtube_url.ActionPosition.LeadingPosition)
+
+        for key, value in CustomQLineEdit.instances.items():
+            value.addAction(self.images[key.lower().replace(" ", "_")], value.ActionPosition.LeadingPosition)
+
+        self.btn_download.setIcon(self.images["download"])
+        self.btn_settings.setIcon(self.images["settings"])
 
     def ui_manage_layouts(self) -> None:
         """Layouts are managed here."""
 
         self.main_layout = QtWidgets.QHBoxLayout(self)
-        self.left_layout = QtWidgets.QVBoxLayout()
-        self.left_layout.setContentsMargins(20, 20, 10, 20)
-        self.right_layout = QtWidgets.QGridLayout()
-        self.right_layout.setContentsMargins(10, 0, 20, 0)
-
-        self.main_layout.addLayout(self.left_layout)
-        self.main_layout.addLayout(self.right_layout)
+        self.main_layout.setContentsMargins(0, 0, 0, 0)
 
     def ui_manage_widgets(self) -> None:
         """Widgets are managed here."""
 
-        self.le_youtube_link = QtWidgets.QLineEdit()
-        self.le_youtube_link.setPlaceholderText("Paste YouTube link here.")
-        self.le_album = QtWidgets.QLineEdit()
-        self.le_album.setPlaceholderText("Album")
-        self.le_artist = QtWidgets.QLineEdit()
-        self.le_artist.setPlaceholderText("Artist")
-        self.le_disc_number = QtWidgets.QLineEdit()
-        self.le_disc_number.setPlaceholderText("Disc Number")
-        self.le_total_discs = QtWidgets.QLineEdit()
-        self.le_total_discs.setPlaceholderText("Total Discs")
-        self.le_track_number = QtWidgets.QLineEdit()
-        self.le_track_number.setPlaceholderText("Track Number")
-        self.le_total_tracks = QtWidgets.QLineEdit()
-        self.le_total_tracks.setPlaceholderText("Total Tracks")
-        self.le_track_title = QtWidgets.QLineEdit()
-        self.le_track_title.setPlaceholderText("Track Title")
-        self.le_year = QtWidgets.QLineEdit()
-        self.le_year.setPlaceholderText("Year")
-        self.btn_download = QtWidgets.QPushButton("Download")
-        self.lbl_drop_info = QtWidgets.QLabel("Drop the album cover below.")
-        self.lbl_album_cover = QtWidgets.QLabel()
+        self.label_background = QtWidgets.QLabel(self)
+        self.label_drop_info = CustomQLabel(self.label_background, (360, 40), "Drop the album cover below.")
+        self.label_album_cover = CustomQLabel(self.label_background, (360, 220))
+        self.progress_bar = CustomQProgressBar(parent=self.label_background)
+        self.le_youtube_url = QtWidgets.QLineEdit(self.label_background)
+        self.le_youtube_url.setPlaceholderText("Paste YouTube link here.")
+        self.le_youtube_url.setFixedSize(405, 40)
 
-        self.left_layout.addWidget(self.le_youtube_link)
-        self.left_layout.addWidget(self.btn_download)
-        self.left_layout.addWidget(self.lbl_drop_info)
-        self.left_layout.addWidget(self.lbl_album_cover)
-        self.right_layout.addWidget(self.le_album, 0, 0)
-        self.right_layout.addWidget(self.le_artist, 0, 1)
-        self.right_layout.addWidget(self.le_disc_number, 1, 0)
-        self.right_layout.addWidget(self.le_total_discs, 1, 1)
-        self.right_layout.addWidget(self.le_track_number, 2, 0)
-        self.right_layout.addWidget(self.le_total_tracks, 2, 1)
-        self.right_layout.addWidget(self.le_track_title, 3, 0)
-        self.right_layout.addWidget(self.le_year, 3, 1)
+        for placeholder in self.placeholders:
+            CustomQLineEdit(parent=self.label_background, placeholder_text=placeholder)
+
+        self.btn_download = QtWidgets.QPushButton(parent=self.label_background, text="Download")
+        self.btn_download.setFixedSize(215, 95)
+        self.btn_settings = QtWidgets.QPushButton(parent=self.label_background, text="Settings")
+        self.btn_settings.setFixedSize(215, 95)
+
+        self.main_layout.addWidget(self.label_background)
+
+        self.label_drop_info.move(20, 170)
+        self.label_album_cover.move(20, 220)
+        self.le_youtube_url.move(20, 55)
+        y_coordinate: int = 170
+
+        for index, custom_line_edit in enumerate(CustomQLineEdit.instances.values()):
+            x_coordinate: int = 455 if index % 2 == 0 else 680
+            y_coordinate: int = y_coordinate + 50 if index in {2, 4, 6, 8} else y_coordinate
+            custom_line_edit.move(x_coordinate, y_coordinate)
+
+        self.btn_download.move(455, 65)
+        self.btn_settings.move(680, 65)
 
     def logic_connect_widgets(self) -> None:
         """Connections are managed here."""
 
         self.btn_download.clicked.connect(self.logic_main_process)
-        self.thread.download_finished.connect(partial(self.logic_display_progress, 1))
-        self.thread.file_converted.connect(partial(self.logic_display_progress, 2))
-        self.thread.file_tagged.connect(partial(self.logic_display_progress, 3))
-        self.thread.error_happened.connect(partial(self.logic_display_progress, -1))
+        self.btn_settings.clicked.connect(self.logic_open_settings)
+        self.thread.download_finished.connect(partial(self.logic_display_information, 1))
+        self.thread.file_converted.connect(partial(self.logic_display_information, 2))
+        self.thread.file_tagged.connect(partial(self.logic_display_information, 3))
+        self.thread.error_happened.connect(partial(self.logic_display_information, -1))
 
-    def logic_display_progress(self, step: int) -> None:
-        """Update the window title to display overall progress.
+    def logic_display_information(self, signal: int) -> None:
+        """Displays information to the user regarding the progress or errors encountered.
+        This information is shown in the window title and / or updated on the progress bar.
 
         Args:
-            step (int): The current step of the overall process.
+            signal (int): The signal associated with the information to be communicated.
         """
 
-        step_map: dict = {
-            -1: " - An error has occurred.",
-            0: " - Downloading...",
-            1: " - Converting...",
-            2: " - Writing metadata...",
-            3: " - Success!"
+        signal_map: dict = {
+            -3: (" - One or more tags are non-numeric.", 0),
+            -2: (" - The provided link is not a valid YouTube link.", 0),
+            -1: (" - An error has occurred.", 0),
+            0: (" - Downloading...", 0),
+            1: (" - Converting...", 35),
+            2: (" - Writing metadata...", 70),
+            3: (" - Success!", 100)
         }
 
-        self.setWindowTitle("YouTube MP3 Downloader" + step_map.get(step, ""))
-
-    def logic_error_dialog(self, message: str) -> None:
-        """Display a critical error dialog with the given message.
-
-        Args:
-            message (str): The error message to display in the dialog.
-        """
-
-        QtWidgets.QMessageBox.critical(self, "Error", message)
+        self.setWindowTitle("YouTube MP3 Downloader" + signal_map[signal][0])
+        self.progress_bar.setValue(signal_map[signal][1])
 
     def logic_main_process(self) -> None:
         """Processes the information entered by the user and attempts to create the desired mp3 file."""
 
-        youtube_link: str = self.le_youtube_link.text()
+        line_edits: dict = CustomQLineEdit.instances
+        youtube_link: str = self.le_youtube_url.text()
 
         if not toolkit.check_link(text=youtube_link):
-            error_message: str = "The provided link is not a valid YouTube link."
-            self.logic_error_dialog(message=error_message)
+            self.logic_display_information(signal=-2)
             return
 
-        strings: list[str] = [
-            QLineEdit.text() for QLineEdit in {
-                self.le_disc_number,
-                self.le_total_discs,
-                self.le_track_number,
-                self.le_total_tracks,
-                self.le_year
-            }
-        ]
+        requires_num_value: list = [le for key, le in line_edits.items() if key == "Year" or " " in key]
+        strings: list[str] = [le.text() for le in requires_num_value]
 
         if not toolkit.check_data(strings=strings):
-            error_message: str = "At least one of the provided tags is not a numeric value, although it should be."
-            self.logic_error_dialog(message=error_message)
+            self.logic_display_information(signal=-3)
             return
 
-        self.metadata["album"] = self.le_album.text()
-        self.metadata["artist"] = self.le_artist.text()
-        self.metadata["discnumber"] = f"{self.le_disc_number.text()}/{self.le_total_discs.text()}"
-        self.metadata["tracknumber"] = f"{self.le_track_number.text()}/{self.le_total_tracks.text()}"
-        self.metadata["title"] = self.le_track_title.text()
-        self.metadata["date"] = self.le_year.text()
-        self.metadata["cover"] = self.current_cover[1] if self.current_cover else None
+        tags: dict = {phr.lower().replace(" ", "_"): line_edits[phr].text() for phr in self.placeholders}
+        tags["disc_number"] = f"{line_edits["Disc Number"].text()}/{line_edits["Total Discs"].text()}"
+        tags["track_number"] = f"{line_edits["Track Number"].text()}/{line_edits["Total Tracks"].text()}"
+        tags["cover"] = self.current_cover[1] if self.current_cover else None
 
-        self.logic_display_progress(0)
-        self.thread.set_url(link=youtube_link)
-        self.thread.set_metadata(metadata=self.metadata)
+        self.logic_display_information(signal=0)
+        setattr(self.thread, "youtube_link", youtube_link)
+        setattr(self.thread, "metadata", tags)
+        setattr(self.thread, "quality", self.mp3_quality)
         self.thread.start()
+
+    def logic_open_settings(self) -> None:
+        """Opens a dialog for selecting the mp3 audio quality."""
+
+        # Setting up the QMessageBox
+        win = QMessageBox(self)
+        win.setIcon(QMessageBox.Question)  # type: ignore
+        win.setWindowTitle("Settings")
+        win.setText("Please select the audio quality for the mp3")
+        win.setStyleSheet("QLabel {color: black} QPushButton {width: 120px; height: 40px}")
+
+        # Creating the buttons
+        options: list[str] = ["128", "192", "320"]
+        buttons: dict = {
+            win.addButton(opt + " kbps", QMessageBox.ActionRole): opt + "k" for opt in options  # type: ignore
+        }
+        win.exec()
+
+        # Record the user's choice
+        self.mp3_quality: str = buttons[win.clickedButton()]
 
 
 if __name__ == '__main__':
-    root = QtWidgets.QApplication()
+    root = QtWidgets.QApplication(sys.argv)
     application = MainWindow()
     application.show()
     root.exec()
