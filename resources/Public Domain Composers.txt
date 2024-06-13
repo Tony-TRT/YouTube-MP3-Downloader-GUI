@@ -1,88 +1,114 @@
-"Vidame de Chartres"
 "King" Oliver
+"Vidame de Chartres"
 Abbot Oddo
-Adam of Saint Victor
+Abertijne Malcourt
+Acourt
 Adam de la Halle
+Adam of Saint Victor
+Adam von Fulda
 Adolf Busch
+Adrien Basin
 Adémar de Chabannes
 Agustin Bardi
 Aimeric de Peguilhan
 Alban Berg
-Albert Roussel
 Albert Huybrechts
+Albert Roussel
 Albertus Parisiensis
 Albrecht von Johansdorf
-Alexander Scriabin
+Alexander Agricola
 Alexander Glazunov
+Alexander Scriabin
 Alexander Zemlinksy
 Aleyn
 Alfredo Casella
 Alphons Diepenbrock
 Amy Beach
 Anatoly Lyadov
-Andrea da Firenze
+Andrea Antico da Montona
 Andrea Stefani
+Andrea da Firenze
+Andreas De Silva
 Angel Gregorio Villoldo
+Antoine Brumel
+Antoine Busnois
+Antoine de Févin
+Antoine de Longueval
 Anton Webern
 Antonello da Caserta
 Antonin Dvorak
+Antonio Cornazzano
 Antonio Lopez Almagro
 Antonio Zacara da Teramo
 Antonio da Cividale
+Antonius Divitis
+Antonius Janue
+Antonius Romanus
 Archipoeta
 Archpoet
 Arnaut Daniel
 Arnaut de Mareuil
 Arnold Schoenberg
-Arnold of Saint Emmeram
 Arnold de Lantins
+Arnold of Saint Emmeram
+Arnolt Schlick
 Arpad Doppler
 Arrigo Boito
 Arseny Avraamov
-Arthur Wilford
 Arthur Loewenstein
+Arthur Wilford
 Artur Kapp
 Asger Hamerik
 Audefroi le Bastart
 August De Boeck
 Augustin Barrios Mangare
 Bartolino da Padova
+Bartolomeo Tromboncino
 Bartolomeo da Bologna
+Bartolomeo degli Organi
 Baude Cordier
 Beatriz de Dia
 Bela Bartok
+Beltrame Feragut
 Ben Harney
+Benedictus Appenzeller
 Bernart de Ventadorn
 Berno of Reichenau
 Bertran de Born
+Biquardus
 Blondel de Nesle
 Borlet
 Byttering
-Camille Saint-Saens
 Camille Chevillard
+Camille Saint-Saens
 Carl Nielsen
 Carlos Gardel
+Carpentras
 Casella
 Castelloza
 Cecile Chaminade
 Cerverí de Girona
 Cesar Cui
-Charles Tomlinson Griffes
-Charles Wood
+Charles Ives
+Charles Koechlin
 Charles Marie Widor
+Charles Tomlinson Griffes
 Charles Tournemire
 Charles Wakefield Cadman
-Charles Koechlin
-Charles Ives
+Charles Wood
 Chastelain de Couci
 Christian Bernekow
 Christian Sinding
 Clara Wildschut
 Claude Debussy
 Claude Terrasse
+Clement Liebert
+Clément Janequin
 Colin Muset
+Colinet de Lannoy
 Comtessa de Dia
 Conon de Béthune
+Conrad Paumann
 Conrado del Campo
 Conradus de Pistoria
 Cor Kint
@@ -94,10 +120,13 @@ Donato da Cascia
 Dora Pejacevic
 Edgar Tinel
 Edmund Jenkins
+Edmund Sturton
+Edmund Turges
 Eduardo Arolas
 Edvard Grieg
 Edward Elgar
 Egardus
+Eloy d'Amerval
 Emile Waldteufel
 Emile Wambach
 Emma Louise Ashford
@@ -116,57 +145,83 @@ F. Andrieu
 Felipe Pedrell
 Ferrucio Busoni
 Filippo Marchetti
+Filippo de Lurano
+Firminus Caron
 Fletcher Henderson
 Florence Price
 Folquet de Marseille
 Francesco Landini
+Francesco Spinacino
+Franchinus Gaffurius
+Francisco de Peñalosa
+Francisco de la Torre
 Frank Bridge
-Franz Strauss
-Franz Schreker
 Franz Schmidt
+Franz Schreker
+Franz Strauss
 Freda Swain
 Fredericq Delius
 Friedrich von Hausen
 Fulbert of Chartres
+G. Dupoitt
 Gabriel Dupont
 Gabriel Faure
 Gabriel Pierne
 Gace Brule
 Galician
+Gaspar van Weerbeke
 Gaucelm Faidit
-Gautier de Dargies
-Gautier de Coincy
 Gautier d'Épinal
+Gautier de Coincy
+Gautier de Dargies
 George Gerschwin
 Gherardello da Firenze
+Giacomo Fogliano
 Giacomo Puccini
+Gilbert Banester
+Gilles Binchois
+Gilles Joye
+Gilles Mureau
+Gilles Reingot
+Giovanni Mazzuoli
 Giovanni Sgambati
 Giovanni da Cascia
-Giovanni Mazzuoli
 Giraut de Bornelh
 Giuseppi Gallignani
 Gontier de Soignies
 Granville Bantock
 Grazioso da Padova
+Guglielmo Ebreo da Pesaro
+Guillaume Dufay
+Guillaume Faugues
+Guillaume Legrant
 Guillaume d'Aquitaine
-Guillaume le Vinier
 Guillaume de Machaut
+Guillaume le Rouge
+Guillaume le Vinier
 Guiot de Dijon
 Guiraut Riquier
 Guiseppe Verdi
-Gustav Mahler
 Gustav Holst
+Gustav Mahler
+Hans Buchner
+Hans Judenkünig
+Hans Kotter
 Hans von Koessler
 Harry Akst
 Hartmann von Aue
+Hayne van Ghizeghem
 Hedwige Chretien
-Heinrich Reimann
-Heinrich von Veldeke
-Heinrich von Morungen
+Heinrich Finck
 Heinrich Frauenlob
+Heinrich Isaac
+Heinrich Reimann
+Heinrich von Morungen
+Heinrich von Veldeke
 Hendrik de Vries
 Henri Duparc
 Henriette Bosmans
+Henry Abyngdon
 Henry Walford Davies
 Heriger of Lobbes
 Herigerus
@@ -175,53 +230,93 @@ Hermann of Reichenau
 Hermannus Contractus
 Hildegard of Bingen
 Hucbald
-Hugo Wolff
+Hugh Aston
+Hugh Kellyk
 Hugo Distler
-Hugo von Montfort
+Hugo Wolff
 Hugo de Lantins
+Hugo von Montfort
 Ignacy Paderewski
 Irene Van Santen
 Isaac Albeniz
+Isaiah the Serb
 Ivan Zajc
+Jacob Obrecht
 Jacob Senleches
+Jacobus Barbireau
 Jacobus Vide
 Jacopo da Bologna
+Jacotin
+Jacquet of Mantua
 Jan Blockx
-Jan van Gilse
 Jan of Jenštejn
+Jan van Gilse
+Jan z Lublina
 Jaufre Rudel
+Jean Braconnier
+Jean Cousin
+Jean Japart
+Jean Mouton
+Jean Richafort
+Jean l'Héritier
 Jef Denijn
 Jefimija
 Jehan Alain
-Jehan Erart
 Jehan Bretel
-Jehan de Lescurel
+Jehan Erart
+Jehan Fresneau
 Jehan Suzay
 Jehan Vaillant
+Jehan de Lescurel
 Jeronimo Gimenez y Bellido
 Jerry Roll Morton
 Jesse Shepard
+Jheronimus de Clibano
 Jimmy Yancey
 Joaquin Turina
 Joham Amberg
 Johan Halvorsen
 Johan Wagenaar
 Johannes Alanus
-Johannes Symonis Hasprois
-Johannes Ciconia
-Johannes Tapissier
-Johannes Cuvelier
+Johannes Brassart
 Johannes Cesaris
-John Philip Sousa
-John Foulds
+Johannes Ciconia
+Johannes Cornago
+Johannes Cuvelier
+Johannes Fedé
+Johannes Ghiselin
+Johannes Legrant
+Johannes Martini
+Johannes Ockeghem
+Johannes Prioris
+Johannes Pullois
+Johannes Regis
+Johannes Symonis Hasprois
+Johannes Tapissier
+Johannes Tinctoris
+Johannes de Limburgia
+Johannes de Quadris
+Johannes de Stokem
+John Browne
 John Dunstable
-Joseph Schillinger
+John Dunstaple
+John Foulds
+John Hothby
+John Philip Sousa
+John Plummer
 Joseph Jongen
+Joseph Schillinger
+Josquin des Prez
+Juan Pérez de Gijón
+Juan de Anchieta
+Juan de Triana
+Juan de Urrede
+Juan del Encina
 Jules Massenet
 Julius Roentgen
 Karel Mestdag
-Karl Piutti
 Karl Goldmark
+Karl Piutti
 Karmik Garmiryan
 Karol Szymanowsky
 Konrad von Würzburg
@@ -235,22 +330,33 @@ Leos Janacek
 Lili Boulanger
 Lodewijk Mortelmans
 Lorenzo da Firenze
+Loyset Compère
 Luise Adolpha Le Beau
 Léonin
 Maestro Piero
 Magister Franciscus
+Maistre Jhan
 Manuel De Falla
+Marbrianus de Orto
 Marcabru
+Marchetto Cara
 Marchetto da Padova
+Marco Dall'Aquila
 Martin Codax
+Martin Luther
 Martinus Fabri
+Mateo Flecha
 Matheus de Sancto Johanne
+Mathurin Forestier
 Matteo da Perugia
-Maurice Ravel
+Matthaeus Pipelare
 Maurice Emmanuel
+Maurice Ravel
 Max Reger
 Mayshuet de Joan
 Meister Alexander
+Mikołaj Radomski
+Mikołaj z Chrzanowa
 Mili Balakiref
 Moniot d'Arras
 Monk of Salzburg
@@ -258,17 +364,24 @@ Mönch von Salzburg
 Neidhart von Reuental
 Niccolò da Perugia
 Nicolai Roslavets
-Nicolas Rimski-Korsakof
+Nicolas Champion
 Nicolas Grenon
+Nicolas Rimski-Korsakof
 Nicolaus Ricci de Nucella Campli
+Nicolaus Ricii de Nucella Campli
+Nicolaus Zacharie
+Nikola the Serb
 Nikolay Obukhow
 Nikos Skalkottas
-Notker the Stammerer
+Ninot le Petit
+Noel Bauldeweyn
 Notker Balbulus
-Notker Physicus
 Notker II
-Odo of Cluny
+Notker Physicus
+Notker the Stammerer
+Nycasius de Clibano
 Odo of Arezzo
+Odo of Cluny
 Oscar Roels
 Oswald von Wolkenstein
 Otloh of Sankt Emmeram
@@ -279,37 +392,56 @@ Paquita Bernardo
 Paul Dresser
 Paul Dukas
 Paul Gräner
-Paul von Klenau
+Paul Hofhaimer
 Paul Lincke
-Peire d'Alvernha
+Paul von Klenau
+Pedro de Escobar
 Peire Cardenal
 Peire Vidal
+Peire d'Alvernha
 Peirol
 Peter Abelard
 Petrus de Cruce
+Petrus de Domarto
 Petrus de Goscalch
-Philippe le Chancelier
+Philippe Basiron
+Philippe Verdelot
 Philippe de Vitry
+Philippe le Chancelier
 Philippus de Caserta
+Pierre Alamire
 Pierre Fontaine
+Pierre de La Rue
+Pierrequin de Thérache
 Pietro Mascagni
 Primo Riccitelli
 Pycard
 Pérotin
 Queldryk
-Raimbaut de Vaqueiras
 Raimbaut d'Aurenga
+Raimbaut de Vaqueiras
 Raimon de Miraval
 Raoul Pugno
 Raoul de Soissons
-Reinmar von Hagenau
+Reginaldus Libert
 Reinmar der Alte
+Reinmar von Hagenau
 Reinmar von Zweter
 Reynaldo Hahn
-Richard Strauss
+Richard Davy
+Richard Hygons
 Richard Loqueville
-Robert Fuchs
+Richard Sampson
+Richard Strauss
 Robert Ceely
+Robert Cowper
+Robert Fayrfax
+Robert Fuchs
+Robert Hacomplaynt
+Robert Johnson
+Robert Morton
+Robert Wilkinson
+Robert de Févin
 Rosy Wertheim
 Roy Henry
 Rudolf Tobias
@@ -317,6 +449,7 @@ Rudolf von Neuenburg
 Rudolph Simonsen
 Ruth Crawford Seeger
 Scott Joplin
+Sebastian Virdung
 Sergei Rachmaninov
 Sergej Prokofjew
 Siegfried Alkan
@@ -327,26 +460,36 @@ Sordello
 Stephen of Liège
 Tannhäuser
 Theo Charlier
+Thomas Ashewell
 Thomas Fabri
+Thomas Stoltzer
 Tom Lehrer
 Tomas Breton
 Trebor
 Tuotilo
 Udalscalcus of Maisach
+Ugolino da Forlì
 Vicente Greco
 Vincent d'Indy
+Vincenzo Capirola
 Vincenzo da Rimini
 W. de Wycombe
 Waldemar von Baussnern
+Walter Frye
+Walter Lambe
 Walther Ruttmann
 Walther von der Vogelweide
 Wilhelm Harteveld
 Wilhelm Stenhammar
-William of Volpiano
+William Cornysh
+William Hawte
+William Horwood
+William IX, Duke of Aquitaine
 William of Dijon
 William of Saint Benignus
-William IX, Duke of Aquitaine
+William of Volpiano
 Wincenty of Kielcza
 Wipo of Burgundy
-Wulfstan the Cantor
 Wulfstan of Winchester
+Wulfstan the Cantor
+Zacara da Teramo
