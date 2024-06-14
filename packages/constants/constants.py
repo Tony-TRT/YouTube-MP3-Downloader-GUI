@@ -10,6 +10,7 @@ from pathlib import Path
 
 BASE_FOLDER: final(Path) = Path(__file__).resolve().parent.parent.parent
 RESOURCES_FOLDER: final(Path) = Path.joinpath(BASE_FOLDER, "resources")
+COMPOSERS: final(Path) = Path.joinpath(RESOURCES_FOLDER, "Public Domain Composers.txt")
 IMAGES_FOLDER: final(Path) = Path.joinpath(RESOURCES_FOLDER, "images")
 IMAGES: final(dict) = {image_path.stem: str(image_path) for image_path in IMAGES_FOLDER.iterdir()}
 STYLE_FOLDER: final(Path) = Path.joinpath(RESOURCES_FOLDER, "style")

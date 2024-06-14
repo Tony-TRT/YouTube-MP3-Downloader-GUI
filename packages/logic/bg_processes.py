@@ -7,11 +7,12 @@ tagging it with user information in the background.
 from pathlib import Path
 from time import sleep
 
+import pytube
 from PySide6.QtCore import QThread, Signal
-from pytube import YouTube
 from pydub import AudioSegment
 from mutagen import id3
 
+from packages.constants import constants
 from packages.logic.toolkit import qthread_error_handler
 
 
@@ -57,7 +58,7 @@ class DownloadAndProcess(QThread):
             Path: The path to the downloaded audio file.
         """
 
-        target: YouTube = YouTube(self.youtube_link)
+        target: pytube.YouTube = pytube.YouTube(self.youtube_link)
         audio_stream = target.streams.filter(only_audio=True).first()
         audio_file: Path = Path(audio_stream.download(output_path=self.output_directory))
         self.download_finished.emit()
@@ -105,3 +106,45 @@ class DownloadAndProcess(QThread):
 
         if filename:
             mp3_file.rename(Path.joinpath(mp3_file.parent, filename))
+
+
+class DetectVideoCopyright(QThread):
+
+    this_is_ok_signal = Signal()
+    this_is_not_ok_signal = Signal()
+    composers = set()
+
+    def __init__(self):
+        super().__init__()
+
+        self.youtube_url = None
+        self.video_title = None
+        self.load_composers()
+
+    @classmethod
+    def load_composers(cls) -> None:
+        """Load composers from the file specified in constants.COMPOSERS."""
+
+        with open(constants.COMPOSERS, "r", encoding="UTF-8") as file:
+            cls.composers = {line.strip().lower() for line in file}
+
+    def run(self) -> None:
+
+        if not self.youtube_url:
+            return
+
+        try:
+            self.video_title: str = pytube.YouTube(self.youtube_url).streams[0].title
+
+        except pytube.exceptions.RegexMatchError:  # type: ignore
+            return
+
+        if not (self.video_title and isinstance(self.video_title, str)):
+            self.this_is_not_ok_signal.emit()
+            return
+
+        if any(composer in self.video_title.lower() for composer in self.composers):
+            self.this_is_ok_signal.emit()
+
+        else:
+            self.this_is_not_ok_signal.emit()
