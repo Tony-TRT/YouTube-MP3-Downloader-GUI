@@ -7,6 +7,7 @@ from functools import partial
 
 from PySide6 import QtWidgets
 from PySide6.QtWidgets import QMessageBox
+from PySide6.QtCore import QPropertyAnimation
 
 from packages.logic import toolkit, bg_processes
 from packages.ui.aesthetic import AestheticWindow
@@ -53,6 +54,9 @@ class MainWindow(AestheticWindow):
         self.label_background = None
         self.label_drop_info = None
         self.label_album_cover = None
+        self.label_legal_warning = None
+        self.label_legal_warning_animation = None
+        self.label_legal_warning_opacity_effect = None
         self.progress_bar = None
         self.le_youtube_url = None
         self.btn_download = None
@@ -111,8 +115,11 @@ class MainWindow(AestheticWindow):
         """Widgets are managed here."""
 
         self.label_background = QtWidgets.QLabel(self)
-        self.label_drop_info = CustomQLabel(self.label_background, (360, 40), "Drop the album cover below.")
+        self.label_drop_info = CustomQLabel(self.label_background, (360, 40), text="Drop the album cover below.")
         self.label_album_cover = CustomQLabel(self.label_background, (360, 220))
+        warning: str = "/!\\ This music video may be subject to copyright protection /!\\"
+        self.label_legal_warning = CustomQLabel(self.label_background, (405, 40), "#FF6060", warning)
+        self.label_legal_warning.setVisible(False)
         self.progress_bar = CustomQProgressBar(parent=self.label_background)
         self.le_youtube_url = QtWidgets.QLineEdit(self.label_background)
         self.le_youtube_url.setPlaceholderText("Paste YouTube link here.")
@@ -130,6 +137,7 @@ class MainWindow(AestheticWindow):
 
         self.label_drop_info.move(20, 170)
         self.label_album_cover.move(20, 220)
+        self.label_legal_warning.move(20, 105)
         self.le_youtube_url.move(20, 55)
         y_coordinate: int = 170
 
@@ -238,6 +246,22 @@ class MainWindow(AestheticWindow):
         Args:
             flag (bool): Indicates whether to display the legal warning or not.
         """
+
+        if flag:
+            self.label_legal_warning_opacity_effect = QtWidgets.QGraphicsOpacityEffect()
+            self.label_legal_warning.setGraphicsEffect(self.label_legal_warning_opacity_effect)
+            self.label_legal_warning_opacity_effect.setOpacity(0)
+            self.label_legal_warning.setVisible(True)
+
+            # Create an opacity animation
+            self.label_legal_warning_animation = QPropertyAnimation(self.label_legal_warning_opacity_effect, b"opacity")
+            self.label_legal_warning_animation.setDuration(3000)
+            self.label_legal_warning_animation.setStartValue(0)
+            self.label_legal_warning_animation.setEndValue(0.7)
+            self.label_legal_warning_animation.start()
+
+        else:
+            self.label_legal_warning.setVisible(False)
 
 
 if __name__ == '__main__':
