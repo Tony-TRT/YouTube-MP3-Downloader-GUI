@@ -31,7 +31,7 @@ class CustomQLineEdit(QLineEdit):
 class CustomQLabel(QLabel):
     """A customized QLabel class for creating labels with specific styles and properties."""
 
-    def __init__(self, parent=None, size: tuple[int, int] = None, text: str = None):
+    def __init__(self, parent=None, size: tuple[int, int] = None, background: str = "#87A9B5", text: str = None):
         super().__init__(parent=parent)
 
         if text:
@@ -41,7 +41,7 @@ class CustomQLabel(QLabel):
             self.setFixedSize(*size)
 
         self.setAlignment(QtCore.Qt.AlignCenter)  # type: ignore
-        self.setStyleSheet("color: #000000; background: #87A9B5; border-radius: 15px;")
+        self.setStyleSheet(f"color: #000000; background: {background}; border-radius: 15px;")
 
 
 class CustomQProgressBar(QProgressBar):

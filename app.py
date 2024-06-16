@@ -7,6 +7,7 @@ from functools import partial
 
 from PySide6 import QtWidgets
 from PySide6.QtWidgets import QMessageBox
+from PySide6.QtCore import QPropertyAnimation
 
 from packages.logic import toolkit, bg_processes
 from packages.ui.aesthetic import AestheticWindow
@@ -21,7 +22,8 @@ class MainWindow(AestheticWindow):
         self.setWindowTitle("YouTube MP3 Downloader")
         self.setFixedSize(900, 500)
         self.setAcceptDrops(True)
-        self.thread = bg_processes.DownloadAndProcess()
+        self.process_thread = bg_processes.DownloadAndProcess()
+        self.legal_thread = bg_processes.DetectVideoCopyright()
         self.current_cover = None
         self.mp3_quality: str = "192k"
         self.placeholders: list[str] = [
@@ -52,6 +54,9 @@ class MainWindow(AestheticWindow):
         self.label_background = None
         self.label_drop_info = None
         self.label_album_cover = None
+        self.label_legal_warning = None
+        self.label_legal_warning_animation = None
+        self.label_legal_warning_opacity_effect = None
         self.progress_bar = None
         self.le_youtube_url = None
         self.btn_download = None
@@ -110,8 +115,11 @@ class MainWindow(AestheticWindow):
         """Widgets are managed here."""
 
         self.label_background = QtWidgets.QLabel(self)
-        self.label_drop_info = CustomQLabel(self.label_background, (360, 40), "Drop the album cover below.")
+        self.label_drop_info = CustomQLabel(self.label_background, (360, 40), text="Drop the album cover below.")
         self.label_album_cover = CustomQLabel(self.label_background, (360, 220))
+        warning: str = "/!\\ This music video may be subject to copyright protection /!\\"
+        self.label_legal_warning = CustomQLabel(self.label_background, (405, 40), "#FF6060", warning)
+        self.label_legal_warning.setVisible(False)
         self.progress_bar = CustomQProgressBar(parent=self.label_background)
         self.le_youtube_url = QtWidgets.QLineEdit(self.label_background)
         self.le_youtube_url.setPlaceholderText("Paste YouTube link here.")
@@ -129,6 +137,7 @@ class MainWindow(AestheticWindow):
 
         self.label_drop_info.move(20, 170)
         self.label_album_cover.move(20, 220)
+        self.label_legal_warning.move(20, 105)
         self.le_youtube_url.move(20, 55)
         y_coordinate: int = 170
 
@@ -145,10 +154,13 @@ class MainWindow(AestheticWindow):
 
         self.btn_download.clicked.connect(self.logic_main_process)
         self.btn_settings.clicked.connect(self.logic_open_settings)
-        self.thread.download_finished.connect(partial(self.logic_display_information, 1))
-        self.thread.file_converted.connect(partial(self.logic_display_information, 2))
-        self.thread.file_tagged.connect(partial(self.logic_display_information, 3))
-        self.thread.error_happened.connect(partial(self.logic_display_information, -1))
+        self.le_youtube_url.textChanged.connect(self.logic_legal_information)
+        self.process_thread.download_finished.connect(partial(self.logic_display_information, 1))
+        self.process_thread.file_converted.connect(partial(self.logic_display_information, 2))
+        self.process_thread.file_tagged.connect(partial(self.logic_display_information, 3))
+        self.process_thread.error_happened.connect(partial(self.logic_display_information, -1))
+        self.legal_thread.this_is_ok_signal.connect(partial(self.logic_show_legal_warning, False))
+        self.legal_thread.this_is_not_ok_signal.connect(partial(self.logic_show_legal_warning, True))
 
     def logic_display_information(self, signal: int) -> None:
         """Displays information to the user regarding the progress or errors encountered.
@@ -170,6 +182,15 @@ class MainWindow(AestheticWindow):
 
         self.setWindowTitle("YouTube MP3 Downloader" + signal_map[signal][0])
         self.progress_bar.setValue(signal_map[signal][1])
+
+    def logic_legal_information(self) -> None:
+        """Initiates a legal information check process for the YouTube video URL entered."""
+
+        if not toolkit.check_link(text=self.le_youtube_url.text()):
+            return
+
+        setattr(self.legal_thread, "youtube_url", self.le_youtube_url.text())
+        self.legal_thread.start()
 
     def logic_main_process(self) -> None:
         """Processes the information entered by the user and attempts to create the desired mp3 file."""
@@ -194,10 +215,10 @@ class MainWindow(AestheticWindow):
         tags["cover"] = self.current_cover[1] if self.current_cover else None
 
         self.logic_display_information(signal=0)
-        setattr(self.thread, "youtube_link", youtube_link)
-        setattr(self.thread, "metadata", tags)
-        setattr(self.thread, "quality", self.mp3_quality)
-        self.thread.start()
+        setattr(self.process_thread, "youtube_link", youtube_link)
+        setattr(self.process_thread, "metadata", tags)
+        setattr(self.process_thread, "quality", self.mp3_quality)
+        self.process_thread.start()
 
     def logic_open_settings(self) -> None:
         """Opens a dialog for selecting the mp3 audio quality."""
@@ -218,6 +239,29 @@ class MainWindow(AestheticWindow):
 
         # Record the user's choice
         self.mp3_quality: str = buttons[win.clickedButton()]
+
+    def logic_show_legal_warning(self, flag: bool) -> None:
+        """Controls the display of a legal warning based on the given flag.
+
+        Args:
+            flag (bool): Indicates whether to display the legal warning or not.
+        """
+
+        if flag:
+            self.label_legal_warning_opacity_effect = QtWidgets.QGraphicsOpacityEffect()
+            self.label_legal_warning.setGraphicsEffect(self.label_legal_warning_opacity_effect)
+            self.label_legal_warning_opacity_effect.setOpacity(0)
+            self.label_legal_warning.setVisible(True)
+
+            # Create an opacity animation
+            self.label_legal_warning_animation = QPropertyAnimation(self.label_legal_warning_opacity_effect, b"opacity")
+            self.label_legal_warning_animation.setDuration(3000)
+            self.label_legal_warning_animation.setStartValue(0)
+            self.label_legal_warning_animation.setEndValue(0.7)
+            self.label_legal_warning_animation.start()
+
+        else:
+            self.label_legal_warning.setVisible(False)
 
 
 if __name__ == '__main__':
